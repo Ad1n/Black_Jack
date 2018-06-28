@@ -11,4 +11,5 @@ module CardDeck
     [CARD_DECK.sample, CARD_DECK.sample]
   end
 
+
 end
