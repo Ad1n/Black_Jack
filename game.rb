@@ -5,6 +5,6 @@ class Game
 
 
   def main_menu
-    
+
   end
 end
