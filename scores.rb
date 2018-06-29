@@ -1,4 +1,7 @@
 class Scores
+
+  attr_accessor :player_total_scores, :dealer_total_scores
+
   def initialize(player_start_card_scores, dealer_start_card_scores)
     @player_total_scores = count_start_scores(player_start_card_scores)
     @dealer_total_scores = count_start_scores(dealer_start_card_scores)
