@@ -21,4 +21,8 @@ class Scores
     total_scores
   end
 
+  def add_scores(card)
+
+  end
+
 end

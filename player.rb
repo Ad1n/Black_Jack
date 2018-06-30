@@ -1,16 +1,7 @@
-class Player
-  include CardDeck
+class Player < Dealer
 
-  attr_reader :start_cards_deck
-
-  def initialize(player_name, player_money)
+  def initialize(bank, player_name)
+    super
     @player_name = player_name
-    @player_money = player_money
-    @start_cards_deck = start_cards
   end
-
-  def add_player_card
-    start_cards_deck << CARD_DECK.sample
-  end
-
 end

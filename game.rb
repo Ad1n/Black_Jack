@@ -1,5 +1,6 @@
 class Game
 
+  attr_accessor :total_bet
   attr_reader :player, :dealer, :scores
 
   def start
@@ -25,12 +26,11 @@ class Game
   def create_players
     p "Hello there! What is your name ?"
     name = gets.chomp!
-    p "How much money do u have?"
-    start_money = gets.chomp!
-    @player = Player.new(name, start_money)
-    @dealer = Diller.new(100)
+    # p "How much money do u have?"
+    # start_money = gets.chomp!
+    @player = Player.new(Bank.new, name)
+    @dealer = Dealer.new(Bank.new)
     @scores = Scores.new(player.start_cards_deck, dealer.start_cards_deck)
-    @bank = Bank.new
     p "Lets dance!"
   end
 
