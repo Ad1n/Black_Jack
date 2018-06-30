@@ -8,4 +8,5 @@ require_relative 'game'
 p 'Welcome to Black_Jack'
 
 @game = Game.new
+@game.start
 
