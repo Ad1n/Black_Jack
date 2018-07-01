@@ -10,6 +10,4 @@ module CardDeck
   def start_cards
     [CARD_DECK.sample, CARD_DECK.sample]
   end
-
-
 end

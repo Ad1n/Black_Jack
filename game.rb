@@ -1,22 +1,31 @@
 class Game
 
-  attr_accessor :total_bet
-  attr_reader :player, :dealer, :scores
+  attr_accessor :total_bet, :round
+  attr_reader :player, :dealer
+
+  def initialize
+    create_players
+    @total_bet = 0
+  end
 
   def start
-    create_players
     loop do
       p "Your cards!"
-      self.player.start_cards_deck.each { |card| p " #{card} " }
+      self.player.cards_deck.each { |card| p " #{card} " }
       p "Dealer cards : * *"
       p "Your total scores : #{self.player.scores.scores}"
+      self.total_bet += 20
+
+      choice = game_actions
       case
-      when game_actions == "1"
+      when choice == "1"
       p '1'
-      when game_actions == "2"
-      p '2'
-      when game_actions == "3"
-      p '3'
+      when choice == "2"
+      player.add_card
+      player.scores.add_scores(player.cards_deck.last)
+      show_cards
+      when choice == "3"
+      show_cards
       else
         break
       end
@@ -34,10 +43,13 @@ class Game
   def game_actions
     p "Enter number of your action"
     p "1 - SKIP"
-    p "2 - TAKE CARD"
+    p "2 - TAKE CARD" if player.cards_deck.count < 3
     p "3 - SHOW CARDS"
     gets.chomp!
   end
 
-
+  def show_cards
+    p "Player cards : #{player.cards_deck}"
+    p "Dealer cards : #{dealer.cards_deck}"
+  end
 end
