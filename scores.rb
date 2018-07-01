@@ -1,10 +1,9 @@
 class Scores
 
-  attr_accessor :player_total_scores, :dealer_total_scores
+  attr_accessor :scores
 
-  def initialize(player_start_card_scores, dealer_start_card_scores)
-    @player_total_scores = count_start_scores(player_start_card_scores)
-    @dealer_total_scores = count_start_scores(dealer_start_card_scores)
+  def initialize(start_cards)
+    @start_cards = count_start_scores(start_cards)
   end
 
   def count_start_scores(cards)
@@ -18,7 +17,7 @@ class Scores
         total_scores += card.to_i
       end
     end
-    total_scores
+    self.scores = total_scores
   end
 
   def add_scores(card)
