@@ -1,8 +1,8 @@
 class Dealer
   include CardDeck
 
-  attr_accessor :scores
-  attr_reader :cards_deck, :money
+  attr_accessor :scores, :cards_deck
+  attr_reader :money
 
   def initialize(bank, player_name = nil)
     @cards_deck = start_cards

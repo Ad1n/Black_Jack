@@ -5,8 +5,6 @@ module CardDeck
                '5^', '5<>', '5+', '5<3', '4^', '4<>', '4+', '4<3', '3^', '3<>', '3+', '3<3', \
                '2^', '2<>', '2+', '2<3']
 
-  protected
-
   def start_cards
     [CARD_DECK.sample, CARD_DECK.sample]
   end
