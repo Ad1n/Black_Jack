@@ -35,6 +35,7 @@ class Game
       self.laps += 1
       game_result
       final_result
+      break if self.laps == "exit"
     end
   end
 
@@ -74,11 +75,12 @@ class Game
 
   def game_result
     show_cards
-    if player.scores.scores > dealer.scores.scores
+    if player.scores.scores > dealer.scores.scores && player.scores.scores <= 21 || \
+       player.scores.scores < dealer.scores.scores && player.scores.scores == 21
       p "You win!"
       p "_____________________"
       player.money.deposit += total_bet
-    elsif player.scores.scores == dealer.scores.scores
+    elsif player.scores.scores == dealer.scores.scores && player.scores.scores <= 21
       p "Draw!"
       p "_____________________"
       player.money.deposit += 10
@@ -95,16 +97,26 @@ class Game
     self.laps = 0
   end
 
+  def choice(choice)
+    if choice == "y"
+      player.money = Bank.new
+      dealer.money = Bank.new
+      start
+    else
+      p "Thanks for gaming! Bye..."
+      self.laps = "exit"
+    end
+  end
+
   def final_result
-    if dealer.money.deposit == 70
+    if dealer.money.deposit == 80
       p "Congratulations! You win the game! Continue? y / n"
       choice = gets.chomp!
-      if choice == "y"
-        start
-      else
-        p "Thanks for gaming! Bye..."
-        self.break
-      end
+      choice(choice)
+    elsif player.money.deposit == 0
+      p "You lose... Another try ?  y / n"
+      choice = gets.chomp!
+      choice(choice)
     end
   end
 end
