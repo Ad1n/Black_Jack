@@ -25,7 +25,7 @@ class Game
         dealer_turn(dealer.scores.scores)
       when choice == "2"
         player.add_card
-        player.scores.add_scores(player.cards_deck.last)
+        player.scores.count_scores(player.cards_deck.last)
         dealer_turn(dealer.scores.scores)
       when choice == "3"
         show_cards
@@ -63,7 +63,7 @@ class Game
   def dealer_turn(scores)
     if scores < 17
       dealer.add_card
-      dealer.scores.add_scores(dealer.cards_deck.last)
+      dealer.scores.count_scores(player.cards_deck.last)
     end
   end
 
