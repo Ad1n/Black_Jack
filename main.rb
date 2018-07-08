@@ -1,4 +1,5 @@
-require_relative 'card_deck'
+require_relative 'card'
+require_relative 'deck'
 require_relative 'dealer'
 require_relative 'player'
 require_relative 'bank'

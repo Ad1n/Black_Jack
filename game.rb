@@ -24,7 +24,7 @@ class Game
       when choice == "1"
         dealer_turn(dealer.scores.scores)
       when choice == "2"
-        player.add_card
+        player.cards_deck << Card.new.card
         player.scores.count_scores(player.cards_deck.last)
         dealer_turn(dealer.scores.scores)
       when choice == "3"
@@ -56,13 +56,13 @@ class Game
   end
 
   def show_cards
-    p "Player cards : #{player.cards_deck}"
-    p "Dealer cards : #{dealer.cards_deck}"
+    p "Player cards : #{player.cards_deck.each{ |card| card }}"
+    p "Dealer cards : #{dealer.cards_deck.each{ |card| card }}"
   end
 
   def dealer_turn(scores)
     if scores < 17
-      dealer.add_card
+      dealer.cards_deck << Card.new.card
       dealer.scores.count_scores(player.cards_deck.last)
     end
   end
@@ -90,8 +90,8 @@ class Game
       p "_____________________"
       dealer.money.deposit += total_bet
     end
-    player.cards_deck = player.start_cards
-    dealer.cards_deck = dealer.start_cards
+    player.cards_deck = Deck.new.start_cards
+    dealer.cards_deck = Deck.new.start_cards
     player.scores = Scores.new(player.cards_deck)
     dealer.scores = Scores.new(dealer.cards_deck)
     self.laps = 0
@@ -109,7 +109,7 @@ class Game
   end
 
   def final_result
-    if dealer.money.deposit == 80
+    if dealer.money.deposit == 0
       p "Congratulations! You win the game! Continue? y / n"
       choice = gets.chomp!
       choice(choice)
