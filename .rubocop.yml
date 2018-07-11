@@ -1,0 +1,92 @@
+Layout/AlignArray:
+  Exclude:
+    - 'card.rb'
+
+Layout/EmptyLinesAroundClassBody:
+  Exclude:
+    - 'bank.rb'
+    - 'card.rb'
+    - 'dealer.rb'
+    - 'deck.rb'
+    - 'player.rb'
+    - 'scores.rb'
+
+Layout/EmptyLinesAroundModuleBody:
+  Exclude:
+    - 'user_interface.rb'
+    - 'validation.rb'
+
+Layout/SpaceBeforeBlockBraces:
+  Exclude:
+    - 'user_interface.rb'
+
+Layout/TrailingBlankLines:
+  Exclude:
+    - 'accessors.rb'
+    - 'card.rb'
+    - 'deck.rb'
+    - 'user_interface.rb'
+
+Lint/UnusedMethodArgument:
+  Exclude:
+    - 'dealer.rb'
+
+Metrics/AbcSize:
+  Max: 69
+
+Metrics/CyclomaticComplexity:
+  Max: 7
+
+Metrics/MethodLength:
+  Max: 21
+
+Metrics/PerceivedComplexity:
+  Max: 8
+
+Style/ConditionalAssignment:
+  Exclude:
+    - 'scores.rb'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'accessors.rb'
+    - 'bank.rb'
+    - 'card.rb'
+    - 'dealer.rb'
+    - 'deck.rb'
+    - 'game.rb'
+    - 'player.rb'
+    - 'scores.rb'
+    - 'user_interface.rb'
+    - 'validation.rb'
+
+Style/EmptyCaseCondition:
+  Exclude:
+    - 'game.rb'
+
+Style/GuardClause:
+  Exclude:
+    - 'user_interface.rb'
+    - 'validation.rb'
+
+Style/MutableConstant:
+  Exclude:
+    - 'card.rb'
+
+Style/NumericPredicate:
+  Exclude:
+    - 'spec/**/*'
+    - 'scores.rb'
+    - 'user_interface.rb'
+
+Style/StringLiterals:
+  Exclude:
+    - 'game.rb'
+    - 'scores.rb'
+    - 'user_interface.rb'
+    - 'validation.rb'
+
+Metrics/LineLength:
+  Max: 108

@@ -1,5 +1,8 @@
 class Game
   include UserInterface
+  include Validation
+
+  validate :total_bet, :type, Integer
 
   attr_accessor :total_bet, :laps
   attr_reader :player, :dealer
@@ -7,6 +10,7 @@ class Game
   def initialize
     create_players
     @total_bet = 0
+    validate!
   end
 
   def start

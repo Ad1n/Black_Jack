@@ -1,5 +1,9 @@
 class Scores
 
+  include Validation
+
+  validate :scores, :presence
+
   attr_accessor :scores
 
   def initialize(start_cards)

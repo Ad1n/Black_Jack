@@ -5,9 +5,12 @@ module UserInterface
   def create_players
     p "Hello there! What is your name ?"
     name = gets.chomp!
-    @player = Player.new(Bank.new, name)
-    @dealer = Dealer.new(Bank.new)
+    @player = Player.new(name)
+    @dealer = Dealer.new
     p "Lets dance #{name} !"
+  rescue RuntimeError => e
+    p e.inspect
+    retry
   end
 
   def bet

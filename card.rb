@@ -1,5 +1,9 @@
 class Card
 
+  include Validation
+
+  validate :card, :presence
+
   attr_reader :card
 
   CARDS_DECK = ['T^', 'T<>', 'T+', 'T<3', 'K^', 'K<>', 'K+', 'K<3', 'Д^', 'Д<>', 'Д+', 'Д<3', \
@@ -10,5 +14,6 @@ class Card
 
   def initialize
     @card = CARDS_DECK.sample
+    validate!
   end
 end
