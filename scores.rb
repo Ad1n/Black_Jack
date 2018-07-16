@@ -13,14 +13,14 @@ class Scores
 
   def count_scores(cards)
     Array(cards).each do |card|
-      if card[0] == "T" && scores < 11
+      if card.card[0] == "T" && scores < 11
         self.scores += 11
-      elsif card[0] == "T" && scores > 11
+      elsif card.card[0] == "T" && scores > 11
         self.scores += 1
-      elsif card.to_i == 0 && card[0] != "T"
+      elsif card.card.to_i == 0 && card.card[0] != "T"
         self.scores += 10
       else
-        self.scores += card.to_i
+        self.scores += card.card.to_i
       end
     end
     self.scores

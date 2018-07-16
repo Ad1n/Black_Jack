@@ -1,22 +1,13 @@
-module UserInterface
+class UserInterface
 
-  private
+  attr_accessor :laps, :start
+  attr_reader :player, :dealer
 
-  def create_players
-    p "Hello there! What is your name ?"
-    name = gets.chomp!
+  def initialize(name)
     @player = Player.new(name)
     @dealer = Dealer.new
-    p "Lets dance #{name} !"
-  rescue RuntimeError => e
-    p e.inspect
-    retry
-  end
-
-  def bet
-    self.total_bet = 20
-    player.money.deposit -= 10
-    dealer.money.deposit -= 10
+    @laps = 0
+    @start = 0
   end
 
   def start_lap_info
@@ -25,7 +16,6 @@ module UserInterface
     p "Dealer cards : "
     dealer.cards_deck.each { p "* " }
     p "Your total scores : #{player.scores.scores}"
-    bet if laps == 0
     p "Your money bank: #{player.money.deposit}"
   end
 
@@ -38,46 +28,15 @@ module UserInterface
   end
 
   def show_cards
-    p "Player cards : #{player.cards_deck.each{ |card| card }}"
-    p "Dealer cards : #{dealer.cards_deck.each{ |card| card }}"
-  end
-
-  def dealer_turn(scores)
-    if scores < 17
-      dealer.cards_deck << Card.new.card
-      dealer.scores.count_scores(player.cards_deck.last)
-    end
-  end
-
-  def game_result
-    show_cards
-    if player.scores.scores > dealer.scores.scores && player.scores.scores <= 21 || \
-       player.scores.scores < dealer.scores.scores && player.scores.scores == 21
-      p "You win!"
-      p "_____________________"
-      player.money.deposit += total_bet
-    elsif player.scores.scores == dealer.scores.scores && player.scores.scores <= 21
-      p "Draw!"
-      p "_____________________"
-      player.money.deposit += 10
-      dealer.money.deposit += 10
-    else
-      p "You lose..."
-      p "_____________________"
-      dealer.money.deposit += total_bet
-    end
-    player.cards_deck = Deck.new.start_cards
-    dealer.cards_deck = Deck.new.start_cards
-    player.scores = Scores.new(player.cards_deck)
-    dealer.scores = Scores.new(dealer.cards_deck)
-    self.laps = 0
+    p "Player cards : #{player.cards_deck.map(&:card)}"
+    p "Dealer cards : #{dealer.cards_deck.map(&:card)}"
   end
 
   def choice(choice)
     if choice == "y"
       player.money = Bank.new
       dealer.money = Bank.new
-      start
+      self.start = 1
     else
       p "Thanks for gaming! Bye..."
       self.laps = "exit"
@@ -96,4 +55,16 @@ module UserInterface
     end
   end
 
+  def lap_result(result)
+    if result == "win"
+      p "You win!"
+      p "_____________________"
+    elsif result == "draw"
+      p "Draw!"
+      p "_____________________"
+    else
+      p "You lose..."
+      p "_____________________"
+    end
+  end
 end

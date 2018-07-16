@@ -32,13 +32,13 @@ Lint/UnusedMethodArgument:
     - 'dealer.rb'
 
 Metrics/AbcSize:
-  Max: 69
+  Max: 100
 
 Metrics/CyclomaticComplexity:
-  Max: 7
+  Max: 10
 
 Metrics/MethodLength:
-  Max: 21
+  Max: 33
 
 Metrics/PerceivedComplexity:
   Max: 8

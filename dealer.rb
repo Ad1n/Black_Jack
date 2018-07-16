@@ -8,7 +8,7 @@ class Dealer
   validate :scores, :type, Scores
 
   def initialize(player_name = nil)
-    @cards_deck = Deck.new.start_cards
+    @cards_deck = Deck.new.cards.sample(2)
     @money = Bank.new
     @scores = Scores.new(cards_deck)
     validate!
