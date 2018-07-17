@@ -1,4 +1,4 @@
-class Scores
+class Hand
 
   include Validation
 
@@ -13,14 +13,14 @@ class Scores
 
   def count_scores(cards)
     Array(cards).each do |card|
-      if card.card[0] == "T" && scores < 11
+      if card.rank == "T" && scores < 11
         self.scores += 11
-      elsif card.card[0] == "T" && scores > 11
+      elsif card.rank == "T" && scores > 11
         self.scores += 1
-      elsif card.card.to_i == 0 && card.card[0] != "T"
+      elsif card.rank.to_i == 0 && card.rank != "T"
         self.scores += 10
       else
-        self.scores += card.card.to_i
+        self.scores += card.rank.to_i
       end
     end
     self.scores

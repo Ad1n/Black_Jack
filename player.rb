@@ -5,7 +5,7 @@ class Player < Dealer
 
   attr_reader :player_name
 
-  def initialize(player_name)
+  def initialize(deck, player_name)
     super
     @player_name = player_name
     validate!

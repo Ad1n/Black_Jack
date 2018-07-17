@@ -2,18 +2,20 @@ class Card
 
   include Validation
 
-  validate :card, :presence
+  validate :rank, :presence
+  validate :suite, :presence
 
-  attr_reader :card
+  attr_reader :rank, :suite
 
   def initialize(rank, suite)
-    @card = rank + suite
+    @rank = rank
+    @suite = suite
     validate!
   rescue RuntimeError => e
     p e.inspect
   end
 
   def to_s
-    "#{card[0]}  #{card[1]}"
+    "#{rank}  #{suite}"
   end
 end

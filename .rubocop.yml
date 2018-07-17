@@ -9,7 +9,8 @@ Layout/EmptyLinesAroundClassBody:
     - 'dealer.rb'
     - 'deck.rb'
     - 'player.rb'
-    - 'scores.rb'
+    - 'hand.rb'
+    - 'user_interface.rb'
 
 Layout/EmptyLinesAroundModuleBody:
   Exclude:
@@ -26,6 +27,7 @@ Layout/TrailingBlankLines:
     - 'card.rb'
     - 'deck.rb'
     - 'user_interface.rb'
+    - 'main.rb'
 
 Lint/UnusedMethodArgument:
   Exclude:
@@ -45,7 +47,11 @@ Metrics/PerceivedComplexity:
 
 Style/ConditionalAssignment:
   Exclude:
-    - 'scores.rb'
+    - 'hand.rb'
+
+Style/IdenticalConditionalBranches:
+  Exclude:
+    - 'user_interface.rb'
 
 Style/Documentation:
   Exclude:
@@ -58,7 +64,7 @@ Style/Documentation:
     - 'deck.rb'
     - 'game.rb'
     - 'player.rb'
-    - 'scores.rb'
+    - 'hand.rb'
     - 'user_interface.rb'
     - 'validation.rb'
 
@@ -70,6 +76,7 @@ Style/GuardClause:
   Exclude:
     - 'user_interface.rb'
     - 'validation.rb'
+    - 'game.rb'
 
 Style/MutableConstant:
   Exclude:
@@ -78,15 +85,16 @@ Style/MutableConstant:
 Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
-    - 'scores.rb'
+    - 'hand.rb'
     - 'user_interface.rb'
 
 Style/StringLiterals:
   Exclude:
     - 'game.rb'
-    - 'scores.rb'
+    - 'hand.rb'
     - 'user_interface.rb'
     - 'validation.rb'
+    - 'main.rb'
 
 Metrics/LineLength:
   Max: 108

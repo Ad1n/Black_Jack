@@ -16,15 +16,13 @@ class Deck
     p e.inspect
   end
 
+  private
+
   def create_deck
     SUITES.each_with_object([]) do |value, suite|
       RANKS.each do |rank|
         suite << Card.new(rank, value)
       end
     end.shuffle!
-  end
-
-  def card_giver
-    cards.sample
   end
 end

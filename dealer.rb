@@ -2,15 +2,19 @@ class Dealer
 
   include Validation
 
-  attr_accessor :scores, :cards_deck, :money
+  attr_accessor :hand, :cards_deck, :money
 
   validate :money, :type, Bank
-  validate :scores, :type, Scores
+  validate :hand, :type, Hand
 
-  def initialize(player_name = nil)
-    @cards_deck = Deck.new.cards.sample(2)
+  def initialize(cards, player_name = nil)
+    @cards_deck = cards
     @money = Bank.new
-    @scores = Scores.new(cards_deck)
+    @hand = Hand.new(cards_deck)
     validate!
+  end
+
+  def add_card(card)
+    cards_deck << card
   end
 end

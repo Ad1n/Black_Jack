@@ -1,11 +1,12 @@
 class UserInterface
 
   attr_accessor :laps, :start
-  attr_reader :player, :dealer
+  attr_reader :player, :dealer, :deck
 
   def initialize(name)
-    @player = Player.new(name)
-    @dealer = Dealer.new
+    @deck = Deck.new
+    @player = Player.new(deck.cards.sample(2), name)
+    @dealer = Dealer.new(deck.cards.sample(2))
     @laps = 0
     @start = 0
   end
@@ -15,7 +16,7 @@ class UserInterface
     player.cards_deck.each { |card| p " #{card} " }
     p "Dealer cards : "
     dealer.cards_deck.each { p "* " }
-    p "Your total scores : #{player.scores.scores}"
+    p "Your total scores : #{player.hand.scores}"
     p "Your money bank: #{player.money.deposit}"
   end
 
@@ -28,8 +29,8 @@ class UserInterface
   end
 
   def show_cards
-    p "Player cards : #{player.cards_deck.map(&:card)}"
-    p "Dealer cards : #{dealer.cards_deck.map(&:card)}"
+    p "Player cards : #{player.cards_deck.map(&:to_s)}"
+    p "Dealer cards : #{dealer.cards_deck.map(&:to_s)}"
   end
 
   def choice(choice)
@@ -39,7 +40,7 @@ class UserInterface
       self.start = 1
     else
       p "Thanks for gaming! Bye..."
-      self.laps = "exit"
+      self.laps = "n"
     end
   end
 
