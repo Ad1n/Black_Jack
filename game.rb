@@ -4,9 +4,11 @@ class Game
   validate :total_bet, :type, Integer
 
   attr_accessor :total_bet, :ui
+  attr_reader :deck
 
   def initialize(name)
-    @ui = UserInterface.new(name)
+    @deck = Deck.new
+    @ui = UserInterface.new(name, deck)
     @total_bet = 0
     validate!
   rescue RuntimeError => e
@@ -20,11 +22,11 @@ class Game
       choice = ui.game_actions
       case
       when choice == "1"
-        dealer_turn(ui.dealer.hand.scores)
+        dealer_turn(ui.dealer.scores)
       when choice == "2"
-        ui.player.add_card(ui.deck.cards.sample)
-        ui.player.hand.count_scores(ui.player.cards_deck.last)
-        dealer_turn(ui.dealer.hand.scores)
+        ui.player.add_card(deck.cards.sample)
+        ui.player.count_scores(ui.player.cards_deck.last)
+        dealer_turn(ui.dealer.scores)
       when choice == "3"
         ui.show_cards
       else
@@ -48,18 +50,18 @@ class Game
 
   def dealer_turn(scores)
     if scores < 17
-      ui.dealer.add_card(ui.deck.cards.sample)
-      ui.dealer.hand.count_scores(ui.player.cards_deck.last)
+      ui.dealer.add_card(deck.cards.sample)
+      ui.dealer.count_scores(ui.player.cards_deck.last)
     end
   end
 
   def game_result
     ui.show_cards
-    if ui.player.hand.scores > ui.dealer.hand.scores && ui.player.hand.scores <= 21 || \
-       ui.player.hand.scores < ui.dealer.hand.scores && ui.player.hand.scores == 21
+    if ui.player.scores > ui.dealer.scores && ui.player.scores <= 21 || \
+       ui.player.scores < ui.dealer.scores && ui.player.scores == 21
       result = "win"
       ui.player.money.deposit += total_bet
-    elsif ui.player.hand.scores == ui.dealer.hand.scores && ui.player.hand.scores <= 21
+    elsif ui.player.scores == ui.dealer.scores && ui.player.scores <= 21
       result = "draw"
       ui.player.money.deposit += 10
       ui.dealer.money.deposit += 10
@@ -67,10 +69,12 @@ class Game
       result = "lose"
       ui.dealer.money.deposit += total_bet
     end
-    ui.player.cards_deck = ui.deck.cards.sample(2)
-    ui.dealer.cards_deck = ui.deck.cards.sample(2)
-    ui.player.hand = Hand.new(ui.player.cards_deck)
-    ui.dealer.hand = Hand.new(ui.dealer.cards_deck)
+    ui.player.cards_deck = deck.cards.sample(2)
+    ui.dealer.cards_deck = deck.cards.sample(2)
+    ui.player.scores = 0
+    ui.player.scores = ui.player.count_scores(ui.player.cards_deck)
+    ui.dealer.scores = 0
+    ui.dealer.scores = ui.dealer.count_scores(ui.dealer.cards_deck)
     ui.laps = 0
     result
   end

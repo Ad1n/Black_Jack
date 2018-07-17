@@ -48,6 +48,7 @@ Metrics/PerceivedComplexity:
 Style/ConditionalAssignment:
   Exclude:
     - 'hand.rb'
+    - 'dealer.rb'
 
 Style/IdenticalConditionalBranches:
   Exclude:
@@ -87,6 +88,10 @@ Style/NumericPredicate:
     - 'spec/**/*'
     - 'hand.rb'
     - 'user_interface.rb'
+    - 'dealer.rb'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
 
 Style/StringLiterals:
   Exclude:

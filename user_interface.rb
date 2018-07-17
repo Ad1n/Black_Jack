@@ -1,10 +1,9 @@
 class UserInterface
 
   attr_accessor :laps, :start
-  attr_reader :player, :dealer, :deck
+  attr_reader :player, :dealer
 
-  def initialize(name)
-    @deck = Deck.new
+  def initialize(name, deck)
     @player = Player.new(deck.cards.sample(2), name)
     @dealer = Dealer.new(deck.cards.sample(2))
     @laps = 0
@@ -16,7 +15,7 @@ class UserInterface
     player.cards_deck.each { |card| p " #{card} " }
     p "Dealer cards : "
     dealer.cards_deck.each { p "* " }
-    p "Your total scores : #{player.hand.scores}"
+    p "Your total scores : #{player.scores}"
     p "Your money bank: #{player.money.deposit}"
   end
 
