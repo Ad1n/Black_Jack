@@ -2,13 +2,21 @@ class Game
   include Validation
 
   validate :total_bet, :type, Integer
+  validate :player, :type, Player
+  validate :dealer, :type, Dealer
+  validate :ui, :type, UserInterface
+  validate :player, :presence
+  validate :dealer, :presence
+  validate :ui, :presence
 
   attr_accessor :total_bet, :ui
-  attr_reader :deck
+  attr_reader :deck, :player, :dealer
 
   def initialize(name)
     @deck = Deck.new
-    @ui = UserInterface.new(name, deck)
+    @player = Player.new(deck.cards.sample(2), name)
+    @dealer = Dealer.new(deck.cards.sample(2))
+    @ui = UserInterface.new
     @total_bet = 0
     validate!
   rescue RuntimeError => e
@@ -18,23 +26,23 @@ class Game
   def start
     loop do
       bet if ui.laps.zero?
-      ui.start_lap_info
-      choice = ui.game_actions
+      ui.start_lap_info(player, dealer)
+      choice = ui.game_actions(player)
       case
       when choice == "1"
-        dealer_turn(ui.dealer.scores)
+        dealer_turn(dealer.scores)
       when choice == "2"
-        ui.player.add_card(deck.cards.sample)
-        ui.player.count_scores(ui.player.cards_deck.last)
-        dealer_turn(ui.dealer.scores)
+        player.add_card(deck.cards.sample)
+        player.count_scores(player.cards_deck.last)
+        dealer_turn(dealer.scores)
       when choice == "3"
-        ui.show_cards
+        ui.show_cards(player, dealer)
       else
         break
       end
       ui.laps += 1
       ui.lap_result(game_result)
-      ui.final_result
+      ui.final_result(player, dealer)
       start if ui.start == 1
       break if ui.laps == "n"
     end
@@ -44,37 +52,37 @@ class Game
 
   def bet
     self.total_bet = 20
-    ui.player.money.deposit -= 10
-    ui.dealer.money.deposit -= 10
+    player.money.deposit -= 10
+    dealer.money.deposit -= 10
   end
 
   def dealer_turn(scores)
     if scores < 17
-      ui.dealer.add_card(deck.cards.sample)
-      ui.dealer.count_scores(ui.player.cards_deck.last)
+      dealer.add_card(deck.cards.sample)
+      dealer.count_scores(player.cards_deck.last)
     end
   end
 
   def game_result
-    ui.show_cards
-    if ui.player.scores > ui.dealer.scores && ui.player.scores <= 21 || \
-       ui.player.scores < ui.dealer.scores && ui.player.scores == 21
+    ui.show_cards(player, dealer)
+    if player.scores > dealer.scores && player.scores <= 21 || \
+       player.scores < dealer.scores && player.scores == 21
       result = "win"
-      ui.player.money.deposit += total_bet
-    elsif ui.player.scores == ui.dealer.scores && ui.player.scores <= 21
+      player.money.deposit += total_bet
+    elsif player.scores == dealer.scores && player.scores <= 21
       result = "draw"
-      ui.player.money.deposit += 10
-      ui.dealer.money.deposit += 10
+      player.money.deposit += 10
+      dealer.money.deposit += 10
     else
       result = "lose"
-      ui.dealer.money.deposit += total_bet
+      dealer.money.deposit += total_bet
     end
-    ui.player.cards_deck = deck.cards.sample(2)
-    ui.dealer.cards_deck = deck.cards.sample(2)
-    ui.player.scores = 0
-    ui.player.scores = ui.player.count_scores(ui.player.cards_deck)
-    ui.dealer.scores = 0
-    ui.dealer.scores = ui.dealer.count_scores(ui.dealer.cards_deck)
+    player.cards_deck = deck.cards.sample(2)
+    dealer.cards_deck = deck.cards.sample(2)
+    player.scores = 0
+    player.scores = player.count_scores(player.cards_deck)
+    dealer.scores = 0
+    dealer.scores = dealer.count_scores(dealer.cards_deck)
     ui.laps = 0
     result
   end

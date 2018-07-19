@@ -1,16 +1,13 @@
 class UserInterface
 
   attr_accessor :laps, :start
-  attr_reader :player, :dealer
 
-  def initialize(name, deck)
-    @player = Player.new(deck.cards.sample(2), name)
-    @dealer = Dealer.new(deck.cards.sample(2))
+  def initialize
     @laps = 0
     @start = 0
   end
 
-  def start_lap_info
+  def start_lap_info(player, dealer)
     p "Your cards!"
     player.cards_deck.each { |card| p " #{card} " }
     p "Dealer cards : "
@@ -19,7 +16,7 @@ class UserInterface
     p "Your money bank: #{player.money.deposit}"
   end
 
-  def game_actions
+  def game_actions(player)
     p "Enter number of your action"
     p "1 - SKIP"
     p "2 - TAKE CARD" if player.cards_deck.count < 3
@@ -27,12 +24,12 @@ class UserInterface
     gets.chomp!
   end
 
-  def show_cards
+  def show_cards(player, dealer)
     p "Player cards : #{player.cards_deck.map(&:to_s)}"
     p "Dealer cards : #{dealer.cards_deck.map(&:to_s)}"
   end
 
-  def choice(choice)
+  def choice(choice, player, dealer)
     if choice == "y"
       player.money = Bank.new
       dealer.money = Bank.new
@@ -43,15 +40,15 @@ class UserInterface
     end
   end
 
-  def final_result
+  def final_result(player, dealer)
     if dealer.money.deposit == 0
       p "Congratulations! You win the game! Continue? y / n"
       choice = gets.chomp!
-      choice(choice)
+      choice(choice, player, dealer)
     elsif player.money.deposit == 0
       p "You lose... Another try ?  y / n"
       choice = gets.chomp!
-      choice(choice)
+      choice(choice, player, dealer)
     end
   end
 

@@ -18,5 +18,3 @@ end
 p "Lets dance #{name} !"
 @game = Game.new(name)
 @game.start
-
-
