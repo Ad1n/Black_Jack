@@ -9,8 +9,7 @@ class Dealer
   def initialize(cards, player_name = nil)
     @cards_deck = cards
     @money = Bank.new
-    @scores = 0
-    self.scores = count_scores(cards)
+    @scores = count_scores(cards)
     validate!
   end
 
@@ -19,6 +18,7 @@ class Dealer
   end
 
   def count_scores(cards)
+    self.scores ||= 0
     Array(cards).each do |card|
       if card.rank == "T" && scores < 11
         self.scores += 11
